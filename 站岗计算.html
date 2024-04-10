@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Time Calculator</title>
+    <script>
+        function addMinutes() {
+            var timeInput = document.getElementById('timeInput').value;
+            var minutesToAdd = parseInt(document.getElementById('minutesInput').value);
+
+            // 检查分钟输入是否有效
+            if (isNaN(minutesToAdd)) {
+                alert("请输入有效的分钟数。");
+                return;
+            }
+
+            // 检查时间输入是否有效
+            if (timeInput.length !== 4 || isNaN(parseInt(timeInput))) {
+                alert("请输入有效的时间，如 'HHMM'。");
+                return;
+            }
+
+            // 从输入中提取小时和分钟
+            var hours = parseInt(timeInput.substring(0, 2));
+            var minutes = parseInt(timeInput.substring(2, 4));
+
+            if (hours > 23 || minutes > 59) {
+                alert("请输入有效的时间格式。小时应在00到23之间，分钟应在00到59之间。");
+                return;
+            }
+
+            var date = new Date();
+            date.setHours(hours, minutes, 0, 0);
+            date.setMinutes(date.getMinutes() + minutesToAdd);
+
+            var newTime = ('0' + date.getHours()).slice(-2) + ('0' + date.getMinutes()).slice(-2);
+            document.getElementById('result').textContent = '新的时间是: ' + newTime;
+        }
+    </script>
+</head>
+<body>
+    <h1>圣妃总店专用站岗计算器</h1>
+    <label for="timeInput">输入时间 (HHMM):</label>
+    <input type="text" id="timeInput" placeholder="早上9：00就输入0900">
+    <br>
+    <label for="minutesInput">添加的分钟数:</label>
+    <input type="number" id="minutesInput" placeholder="30">
+    <br>
+    <button onclick="addMinutes()">计算新的时间</button>
+    <p id="result"></p >
+</body>
+</html>
